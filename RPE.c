@@ -70,4 +70,44 @@ char **parse_line(char *line)
 
 int exe_args(char **args)
 {
+	pid_t pid;
+	int status;
+	char *path;
+
+	if (args[0] == NULL)
+		return (1);
+
+	if (strcmp(args[0], "exit") == 0)
+		return (0);
+
+	path = is_a_command(args[0]);
+
+	if (!path)
+	{
+		fprintf(stderr, "Command unknown\n", argv[0]);
+		return (2);
+	}
+
+	pid = fork();
+
+	if (pid == 0)
+	{
+		if (execvp(args[0], args) == -1)
+			perror("Error during child process");
+		exit(EXIT_FAILURE);
+	}
+
+	else if (pid < 0)
+		perror("Forking error");
+
+	else
+	{
+		do {
+			waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+
+	free(path);
+
+	return (1);
 }
