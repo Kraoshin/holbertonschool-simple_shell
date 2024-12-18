@@ -10,7 +10,7 @@ int main(void)
 		shell_interactive();
 
 	else
-		shell_no_interractive();
+		shell_no_interactive();
 
 	return (0);
 }
