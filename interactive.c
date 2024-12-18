@@ -19,8 +19,5 @@ void shell_interactive(void)
 		free(line);
 		free(args);
 
-		if (status >= 0)
-			exit(status);
-
-	} while (status == -1);
+	} while (status);
 }
