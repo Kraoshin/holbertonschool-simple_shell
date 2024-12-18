@@ -45,6 +45,8 @@ char *is_a_command(char *args)
 
 	if (!env)
 		return (NULL);
+	if (access(args, X_OK) == 0)
+		return (strdup(args));
 
 	token = strtok(env, ":");
 
