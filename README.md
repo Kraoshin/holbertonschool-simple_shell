@@ -1,4 +1,4 @@
-# Simple iShell Project
+# Simple Shell Project
 
 ## Description
 This is a basic implementation of a Unix shell in C, designed to meet specific project requirements. The shell provides a command-line interface that can execute system commands, handle environment variables, and support both interactive and non-interactive modes.
