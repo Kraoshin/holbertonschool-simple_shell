@@ -1,4 +1,4 @@
-#include "shell.c"
+#include "shell.h"
 
 /**
  *
@@ -32,9 +32,55 @@ char *read_line(void)
  *
  */
 
+char *read_stream(void)
+{
+	int buffsize = 1024, position = 0;
+	char *line = malloc(sizeof(char) * buffsize), charac;
+	ssize_t bytes_read;
+
+	if (!line)
+	{
+		fprintf(stderr, "allocation failed");
+		exit(EXIT_FAILURE);
+	}
+
+	while (1)
+	{
+		bytes_read = read(STDIN_FILENO, &charac, 1);
+
+		if (bytes_read == -1)
+		{
+			perror("read");
+			free(line);
+			exit(EXIT_FAILURE);
+		}
+
+		else if (bytes_read == 0)
+		{
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
+
+		else if (charac == '\n')
+		{
+			line[position] = '\0';
+			return (line);
+		}
+
+		else
+			line[position] = charac;
+
+		position++;
+	}
+}
+
+/**
+ *
+ */
+
 char **parse_line(char *line)
 {
-	int buffsize = 64, position = 0;
+	int buffsize = 100, position = 0;
 	char **tokens = malloc(buffsize * sizeof(char *)), *token;
 
 	if (!tokens)
@@ -50,10 +96,10 @@ char **parse_line(char *line)
 		tokens[position] = token;
 		position++;
 
-		if (i > buffsize)
+		if (position >= buffsize)
 		{
 			fprintf(stderr, "Too many tokens, buffer size exceeded\n");
-			break;
+			exit(EXIT_FAILURE);
 		}
 
 		token = strtok(NULL, TOK_DELIM);
@@ -84,7 +130,7 @@ int exe_args(char **args)
 
 	if (!path)
 	{
-		fprintf(stderr, "Command unknown\n", argv[0]);
+		fprintf(stderr, "%s command unknown\n", args[0]);
 		return (2);
 	}
 
