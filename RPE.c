@@ -38,10 +38,7 @@ char **parse_line(char *line)
 	char **tokens = malloc(buffsize * sizeof(char *)), *token;
 
 	if (!tokens)
-	{
 		fprintf(stderr, "memory allocation failed\n");
-		exit(EXIT_FAILURE);
-	}
 
 	token = strtok(line, TOK_DELIM);
 
@@ -79,35 +76,39 @@ int exe_args(char **args)
 
 	if (strcmp(args[0], "exit") == 0)
 		return (0);
-
-	path = is_a_command(args[0]);
-
-	if (!path)
-	{
-		fprintf(stderr, "%s command unknown\n", args[0]);
-		return (2);
-	}
-
-	pid = fork();
-
-	if (pid == 0)
-	{
-		if (execvp(args[0], args) == -1)
-			perror("Error during child process");
-		exit(EXIT_FAILURE);
-	}
-
-	else if (pid < 0)
-		perror("Forking error");
+	else if (strcmp(args[0], "env") == 0)
+		print_env();
 
 	else
 	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		path = is_a_command(args[0]);
+
+		if (!path)
+		{
+			fprintf(stderr, "%s command unknown\n", args[0]);
+			return (2);
+		}
+
+		pid = fork();
+
+		if (pid == 0)
+		{
+			if (execvp(args[0], args) == -1)
+				perror("Error during child process");
+			exit(EXIT_FAILURE);
+		}
+
+		else if (pid < 0)
+			perror("Forking error");
+
+		else
+		{
+			do {
+				waitpid(pid, &status, WUNTRACED);
+			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		}
+
+		free(path);
 	}
-
-	free(path);
-
 	return (1);
 }
