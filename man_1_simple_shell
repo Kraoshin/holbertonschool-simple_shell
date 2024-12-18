@@ -1,0 +1,124 @@
+.TH SIMPLE_SHELL 1 "2024-12-18" "Version 1.0" "User Commands"
+
+.SH NAME
+simple_shell \- A basic Unix-like shell implementation in C
+
+.SH SYNOPSIS
+.B simple_shell
+[command]
+
+.SH DESCRIPTION
+.B simple_shell
+is a custom Unix shell implementation that provides a command-line interface for executing system commands and built-in functions. It supports both interactive and non-interactive modes of operation.
+
+.SH FEATURES
+.IP \[bu] 2
+Interactive and non-interactive shell modes
+.IP \[bu] 2
+Dynamic command line reading
+.IP \[bu] 2
+Input tokenization
+.IP \[bu] 2
+Command path resolution
+.IP \[bu] 2
+Process creation and execution
+.IP \[bu] 2
+Environment variable handling
+
+.SH BUILT-IN COMMANDS
+.TP
+.B exit
+Terminates the shell
+.TP
+.B env
+Prints all current environment variables
+
+.SH USAGE
+.SS Interactive Mode
+Launch the shell and interact directly:
+.RS
+.B $ ./simple_shell
+.B simple_shell$ ls
+.B simple_shell$ pwd
+.B simple_shell$ exit
+.RE
+
+.SS Non-Interactive Mode
+Pipe commands or use input redirection:
+.RS
+.B $ echo "ls" | ./simple_shell
+.B $ cat commands.txt | ./simple_shell
+.RE
+
+.SH TOKEN DELIMITERS
+The shell recognizes the following token delimiters:
+.IP \[bu] 2
+Space
+.IP \[bu] 2
+Tab (\et)
+.IP \[bu] 2
+Carriage return (\er)
+.IP \[bu] 2
+Newline (\en)
+.IP \[bu] 2
+Bell (\ea)
+
+.SH PREREQUISITES
+.IP \[bu] 2
+GNU Compiler Collection (GCC)
+.IP \[bu] 2
+UNIX-like operating system (Linux, macOS)
+.IP \[bu] 2
+Standard C libraries
+
+.SH COMPILATION
+Compile the shell using:
+.RS
+.B gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell
+.RE
+
+.SH LIMITATIONS
+.IP \[bu] 2
+Limited built-in command support
+.IP \[bu] 2
+Basic path resolution mechanism
+.IP \[bu] 2
+No advanced shell features like pipes or redirections
+.IP \[bu] 2
+Basic error handling
+
+.SH FILE STRUCTURE
+.IP \[bu] 2
+.B shell.h
+Header file with function declarations
+.IP \[bu] 2
+.B main.c
+Entry point and mode selection
+.IP \[bu] 2
+Implementation files for core functions
+
+.SH ERROR HANDLING
+Handles various error scenarios including:
+.IP \[bu] 2
+Unknown commands
+.IP \[bu] 2
+Memory allocation failures
+.IP \[bu] 2
+Process creation errors
+.IP \[bu] 2
+Command execution errors
+
+.SH AUTHORS
+.IP \[bu] 2
+Giovanni Farias (GitHub: @ginftls)
+.IP \[bu] 2
+Killian Kerleau (GitHub: @Kraoshin)
+
+.SH LICENSE
+MIT License
+
+.SH BUGS
+Report bugs to the authors via their GitHub profiles.
+
+.SH SEE ALSO
+bash(1), sh(1), execvp(3)
