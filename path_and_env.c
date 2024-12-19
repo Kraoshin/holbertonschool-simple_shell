@@ -22,15 +22,16 @@ void print_env(void)
 char *_getenv(const char *env_var)
 {
 	char **env = environ;
-	size_t var_len = strlen(env_var);
+	int i = 0;
+	char *key;
 
-	while (*env)
+	while (env[i])
 	{
-		if (strncmp(*env, env_var, var_len) == 0 && (*env)[var_len] == '=')
-			return (*env + var_len + 1);
-		env++;
+		key = strtok(env[i], "=");
+		if (strcmp(env_var, key) == 0)
+			return (strtok(NULL, "\n"));
+		i++;
 	}
-
 	return (NULL);
 }
 
@@ -40,7 +41,7 @@ char *_getenv(const char *env_var)
 
 char *is_a_command(char *args)
 {
-	char *env = _getenv("PATH"), *token, *tmp, *path;
+	char *env = _getenv("PATH"), *token, *tmp;
 	struct stat st;
 
 	if (!env)
@@ -65,16 +66,7 @@ char *is_a_command(char *args)
 		strcat(tmp, args);
 
 		if (stat(tmp, &st) == 0)
-		{
-			if (access(tmp, X_OK) == 0)
-			{
-				path = strdup(tmp);
-
-				free(tmp);
-
-				return (path);
-			}
-		}
+			return (tmp);
 
 		free(tmp);
 
