@@ -11,7 +11,7 @@ void shell_interactive(void)
 	int status = -1;
 
 	do {
-		printf("simple_shell$");
+		printf("simple_shell$ ");
 
 		line = read_line();
 		args = parse_line(line);
