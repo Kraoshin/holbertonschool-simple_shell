@@ -50,14 +50,15 @@ char **parse_line(char *line)
 
 	while (token)
 	{
-		tokens[position] = token;
-		position++;
 
 		if (position >= buffsize)
 		{
 			fprintf(stderr, "Too many tokens, buffer size exceeded\n");
 			exit(EXIT_FAILURE);
 		}
+
+		tokens[position] = strdup(token);
+		position++;
 
 		token = strtok(NULL, TOK_DELIM);
 	}
@@ -115,7 +116,8 @@ int exe_args(char **args)
 			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 		}
 
-		free(path);
+		if (path)
+			free(path);
 	}
 	return (1);
 }
