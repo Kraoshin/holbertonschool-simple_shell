@@ -1,7 +1,9 @@
 #include "shell.h"
 
 /**
+ * main - choose between interactive or no-interactive mod for the shell
  *
+ * Return: always 0
  */
 
 int main(void)

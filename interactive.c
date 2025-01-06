@@ -1,7 +1,8 @@
 #include "shell.h"
 
 /**
- *
+ * shell_interactive - program that display simple_shell$ in loop until
+ * and read parse execute differents args until you leave the shell
  */
 
 void shell_interactive(void)
