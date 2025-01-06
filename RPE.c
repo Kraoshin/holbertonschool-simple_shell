@@ -1,7 +1,9 @@
 #include "shell.h"
 
 /**
+ * read_line - read line input using getline function
  *
+ * Return: The buffer containing the line read by getline
  */
 
 char *read_line(void)
@@ -29,7 +31,11 @@ char *read_line(void)
 }
 
 /**
+ * parse_line - tokenize the line received from read_line function
  *
+ * @line: buffer containing line read by read_line function
+ *
+ * Return: the string tokenized
  */
 
 char **parse_line(char *line)
@@ -62,7 +68,14 @@ char **parse_line(char *line)
 }
 
 /**
+ * exe_args - take the tokenized string from parse_line function, check if
+ * the input isnt some built-in function, then if a path exist through
+ * is_a_command fonction then create a child process of the command input
+ * if it exist
  *
+ * @args: pointer to a pointer containing the tokenized string
+ *
+ * Return: 1 if there is any failure
  */
 
 int exe_args(char **args)
