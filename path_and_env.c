@@ -52,7 +52,7 @@ char *_getenv(const char *env_var)
 
 char *is_a_command(char *args)
 {
-	char *env = _getenv("PATH"), *token, *tmp;
+	char *env = _getenv("PATH"), *token, *tmp, *result;
 	struct stat st;
 
 	if (!env)
@@ -77,7 +77,11 @@ char *is_a_command(char *args)
 		strcat(tmp, args);
 
 		if (stat(tmp, &st) == 0)
-			return (tmp);
+		{
+			result = strdup(tmp);
+			free(tmp);
+			return (result);
+		}
 
 		free(tmp);
 
