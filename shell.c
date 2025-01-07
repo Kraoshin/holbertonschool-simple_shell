@@ -20,9 +20,8 @@ int main(void)
 		status = exe_args(args);
 
 		free(args);
+		free(line);
 	}
-
-	free(line);
 
 	return (EXIT_SUCCESS);
 }
