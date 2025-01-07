@@ -17,7 +17,7 @@ char *read_line(void)
 	{
 		if (line == NULL)
 		{
-			free (line);
+			free(line);
 			exit(EXIT_SUCCESS);
 		}
 
