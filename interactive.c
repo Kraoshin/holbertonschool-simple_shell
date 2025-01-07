@@ -17,7 +17,8 @@ void shell_interactive(void)
 		args = parse_line(line);
 		status = exe_args(args);
 
-		cleanup(args, line);
+		free (line);
+		free(args);
 
 	} while (status);
 }
