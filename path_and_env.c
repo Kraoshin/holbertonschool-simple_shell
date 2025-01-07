@@ -50,8 +50,7 @@ char *_getenv(const char *env_var)
 
 char *is_a_command(char *args)
 {
-	char *path, *tmp, *dir;
-	char *result;
+	char *path, *tmp, *dir, *result;
 	struct stat st;
 
 	if (access(args, X_OK) == 0)
