@@ -49,7 +49,7 @@ char **parse_line(char *line)
 		exit(EXIT_FAILURE);
 	}
 
-	token = strtok(line, TOK_DELIM);
+	token = strtok(line, " \t\r\n\a");
 
 	while (token)
 	{
@@ -60,7 +60,7 @@ char **parse_line(char *line)
 		else
 			break;
 
-		token = strtok(NULL, TOK_DELIM);
+		token = strtok(NULL, " \t\r\n\a");
 	}
 
 	tokens[position] = NULL;
