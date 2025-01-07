@@ -35,7 +35,7 @@ char *_getenv(const char *env_var)
 			return (*env + len + 1);
 		env++;
 	}
-	return (NULL);
+	return (0);
 }
 
 /**

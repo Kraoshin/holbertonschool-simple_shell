@@ -78,8 +78,6 @@ int exe_args(char **args)
 		return (1);
 	if (strcmp(args[0], "exit") == 0)
 		return (0);
-	else if (strcmp(args[0], "env") == 0)
-		print_env();
 
 	path = is_a_command(args[0]);
 
@@ -94,7 +92,7 @@ int exe_args(char **args)
 	{
 		if (execve(path, args, environ) == -1)
 			perror("hsh");
-		exit(EXIT_FAILURE);
+		_exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 		perror("hsh");
@@ -108,5 +106,5 @@ int exe_args(char **args)
 
 	free(path);
 
-	return (0);
+	return (1);
 }
