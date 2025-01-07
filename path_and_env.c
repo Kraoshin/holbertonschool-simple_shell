@@ -27,15 +27,13 @@ void print_env(void)
 char *_getenv(const char *env_var)
 {
 	char **env = environ;
-	int i = 0;
-	char *key;
+	size_t len = strlen(env_var);
 
-	while (env[i])
+	while (*env)
 	{
-		key = strtok(env[i], "=");
-		if (strcmp(env_var, key) == 0)
-			return (strtok(NULL, "\n"));
-		i++;
+		if (strncmp(*env, env_var, len) == 0 && (*env)[len] == '=')
+			return (*env + len + 1);
+		env++;
 	}
 	return (NULL);
 }
@@ -52,41 +50,42 @@ char *_getenv(const char *env_var)
 
 char *is_a_command(char *args)
 {
-	char *env = _getenv("PATH"), *token, *tmp, *result;
+	char *path, *tmp, *dir;
+	char *result;
 	struct stat st;
 
-	if (!env)
-		return (NULL);
 	if (access(args, X_OK) == 0)
 		return (strdup(args));
 
-	token = strtok(env, ":");
+	path = _getenv("PATH");
+	if (!path)
+		return (NULL);
 
-	while (token)
+	tmp = strdup(path);
+	if (!tmp)
+		return (NULL);
+
+	result = malloc(4096);
+	if (!result)
 	{
-		tmp = malloc(strlen(token) + strlen(args) + 2);
+		free(tmp);
+		return (NULL);
+	}
 
-		if (!tmp)
+	dir = strtok(tmp, ":");
+	while (dir)
+	{
+		sprintf(result, "%s/%s", dir, args);
+
+		if (stat(result, &st) == 0 && access(result, X_OK) == 0)
 		{
-			perror("Allocation failed");
-			return (NULL);
-		}
-
-		strcpy(tmp, token);
-		strcat(tmp, "/");
-		strcat(tmp, args);
-
-		if (stat(tmp, &st) == 0)
-		{
-			result = strdup(tmp);
 			free(tmp);
 			return (result);
 		}
-
-		free(tmp);
-
-		token = strtok(NULL, ":");
+		dir = strtok(NULL, ":");
 	}
 
+	free(result);
+	free(tmp);
 	return (NULL);
 }
