@@ -54,9 +54,7 @@ char **parse_line(char *line)
 	while (token)
 	{
 		if (position < buffsize)
-		{
 			tokens[position++] = token;
-		}
 		else
 			break;
 
