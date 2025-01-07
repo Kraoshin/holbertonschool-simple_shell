@@ -40,42 +40,29 @@ char *read_line(void)
 
 char **parse_line(char *line)
 {
-	int buffsize = 100, position = 0, i;
+	int buffsize = 100, position = 0;
 	char **tokens = malloc(buffsize * sizeof(char *)), *token;
 
 	if (!tokens)
 	{
-		fprintf(stderr, "memory allocation failed\n");
-		return (NULL);
+		perror("allocation error");
+		exit(EXIT_FAILURE);
 	}
 
 	token = strtok(line, TOK_DELIM);
 
 	while (token)
 	{
-
-		if (position >= buffsize)
+		if (position < buffsize)
 		{
-			fprintf(stderr, "Too many tokens, buffer size exceeded\n");
-			for (i = 0; i < position; i++)
-				free(tokens[i]);
-			free(tokens);
-			exit(EXIT_FAILURE);
+			tokens[position++] = token;
 		}
-		tokens[position] = strdup(token);
-
-		if (!tokens[position])
-		{
-			fprintf(stderr, "Memory allocation for token failed\n");
-			for (i = 0; i < position; i++)
-				free(tokens[i]);
-			free(tokens);
-			return (NULL);
-		}
-		position++;
+		else
+			break;
 
 		token = strtok(NULL, TOK_DELIM);
 	}
+
 	tokens[position] = NULL;
 
 	return (tokens);
@@ -100,59 +87,38 @@ int exe_args(char **args)
 
 	if (!args[0])
 		return (1);
-
 	if (strcmp(args[0], "exit") == 0)
 		return (0);
 	else if (strcmp(args[0], "env") == 0)
 		print_env();
-
 	else
 	{
 		path = is_a_command(args[0]);
 
+		if (!path)
+		{
+			fprintf(stderr, "hsh %s: command not found\n", args[0]);
+			return (127);
+		}
 		pid = fork();
 
 		if (pid == 0)
 		{
-			if (execvp(args[0], args) == -1)
-				perror("Error during child process");
+			if (execve(path, args, environ) == -1)
+				perror("hsh");
+
 			exit(EXIT_FAILURE);
 		}
-
 		else if (pid < 0)
-			perror("Forking error");
-
+			perror("hsh");
 		else
 		{
 			do {
 				waitpid(pid, &status, WUNTRACED);
 			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 		}
-
 		if (path)
 			free(path);
 	}
 	return (1);
-}
-
-/**
- * cleanup - function that free memory alocation
- *
- * @tokens: the parsed string from input
- * @line: the input string stored
- */
-
-void cleanup(char **tokens, char *line)
-{
-	int i;
-
-	if (tokens)
-	{
-		for (i = 0; tokens[i] != NULL; i++)
-			free(tokens[i]);
-		free(tokens);
-	}
-
-	if (line)
-		free(line);
 }
