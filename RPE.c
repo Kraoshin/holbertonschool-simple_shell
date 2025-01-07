@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * read_line - read line input using getline function
+ * read_line - read line input using getline function and handle eof
  *
  * Return: The buffer containing the line read by getline
  */
@@ -11,18 +11,19 @@ char *read_line(void)
 	char *line = NULL;
 	size_t buffsize = 0;
 
-	if (getline(&line, &buffsize, stdin) == -1)
+	ssize_t bread = getline(&line, &buffsize, stdin);
+
+	if (bread == -1)
 	{
-		if (!line)
+		if (line == NULL)
 		{
-			free(line);
+			free (line);
 			exit(EXIT_SUCCESS);
 		}
 
 		else
 		{
 			free(line);
-			perror("error while reading the line from stdin");
 			exit(EXIT_FAILURE);
 		}
 	}
