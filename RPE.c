@@ -14,17 +14,8 @@ char *read_line(void)
 
 	if (bread == -1)
 	{
-		if (line == NULL)
-		{
-			free(line);
-			exit(EXIT_SUCCESS);
-		}
-
-		else
-		{
-			free(line);
-			exit(EXIT_FAILURE);
-		}
+		free(line);
+		exit(EXIT_SUCCESS);
 	}
 
 	return (line);
@@ -89,34 +80,33 @@ int exe_args(char **args)
 		return (0);
 	else if (strcmp(args[0], "env") == 0)
 		print_env();
+
+	path = is_a_command(args[0]);
+
+	if (!path)
+	{
+		fprintf(stderr, "hsh %s: command not found\n", args[0]);
+		return (127);
+	}
+	pid = fork();
+
+	if (pid == 0)
+	{
+		if (execve(path, args, environ) == -1)
+			perror("hsh");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid < 0)
+		perror("hsh");
 	else
 	{
-		path = is_a_command(args[0]);
-
-		if (!path)
-		{
-			fprintf(stderr, "hsh %s: command not found\n", args[0]);
-			return (127);
-		}
-		pid = fork();
-
-		if (pid == 0)
-		{
-			if (execve(path, args, environ) == -1)
-				perror("hsh");
-
-			exit(EXIT_FAILURE);
-		}
-		else if (pid < 0)
-			perror("hsh");
-		else
-		{
-			do {
-				waitpid(pid, &status, WUNTRACED);
-			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-		}
-		if (path)
-			free(path);
+		do {
+			waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
+
+
+	free(path);
+
 	return (1);
 }
