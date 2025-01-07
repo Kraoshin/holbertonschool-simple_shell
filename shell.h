@@ -21,5 +21,5 @@ int exe_args(char **args);
 void print_env(void);
 char *_getenv(const char *env_var);
 char *is_a_command(char *args);
-
+void cleanup(char **tokens, char *line);
 #endif
