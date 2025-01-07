@@ -10,7 +10,6 @@ char *read_line(void)
 {
 	char *line = NULL;
 	size_t buffsize = 0;
-
 	ssize_t bread = getline(&line, &buffsize, stdin);
 
 	if (bread == -1)
@@ -41,11 +40,14 @@ char *read_line(void)
 
 char **parse_line(char *line)
 {
-	int buffsize = 100, position = 0;
+	int buffsize = 100, position = 0, i;
 	char **tokens = malloc(buffsize * sizeof(char *)), *token;
 
 	if (!tokens)
+	{
 		fprintf(stderr, "memory allocation failed\n");
+		return (NULL);
+	}
 
 	token = strtok(line, TOK_DELIM);
 
@@ -55,15 +57,25 @@ char **parse_line(char *line)
 		if (position >= buffsize)
 		{
 			fprintf(stderr, "Too many tokens, buffer size exceeded\n");
+			for (i = 0; i < position; i++)
+				free(tokens[i]);
+			free(tokens);
 			exit(EXIT_FAILURE);
 		}
-
 		tokens[position] = strdup(token);
+
+		if (!tokens[position])
+		{
+			fprintf(stderr, "Memory allocation for token failed\n");
+			for (i = 0; i < position; i++)
+				free(tokens[i]);
+			free(tokens);
+			return (NULL);
+		}
 		position++;
 
 		token = strtok(NULL, TOK_DELIM);
 	}
-
 	tokens[position] = NULL;
 
 	return (tokens);
@@ -121,4 +133,26 @@ int exe_args(char **args)
 			free(path);
 	}
 	return (1);
+}
+
+/**
+ * cleanup - function that free memory alocation
+ *
+ * @tokens: the parsed string from input
+ * @line: the input string stored
+ */
+
+void cleanup(char **tokens, char *line)
+{
+	int i;
+
+	if (tokens)
+	{
+		for (i = 0; tokens[i] != NULL; i++)
+			free(tokens[i]);
+		free(tokens);
+	}
+
+	if (line)
+		free(line);
 }
