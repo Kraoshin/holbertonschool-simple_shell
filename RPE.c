@@ -108,5 +108,5 @@ int exe_args(char **args)
 
 	free(path);
 
-	return (1);
+	return (0);
 }
