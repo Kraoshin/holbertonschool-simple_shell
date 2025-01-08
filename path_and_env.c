@@ -58,17 +58,17 @@ char *is_a_command(char *args)
 
 	path = _getenv("PATH");
 	if (!path)
-		return (0);
+		return (NULL);
 
 	tmp = strdup(path);
 	if (!tmp)
-		return (0);
+		return (NULL);
 
 	result = malloc(4096);
 	if (!result)
 	{
 		free(tmp);
-		return (0);
+		return (NULL);
 	}
 
 	dir = strtok(tmp, ":");
@@ -86,5 +86,5 @@ char *is_a_command(char *args)
 
 	free(result);
 	free(tmp);
-	return (0);
+	return (NULL);
 }
