@@ -121,8 +121,6 @@ int exe_args(char **args)
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-
-
 	free(path);
 
 	return (1);
