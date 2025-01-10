@@ -26,16 +26,16 @@ void print_env(void)
 
 char *_getenv(const char *env_var)
 {
-	char **env = environ;
+	int i = 0;
 	size_t len = strlen(env_var);
 
-	while (*env)
+	while (environ[i])
 	{
-		if (strncmp(*env, env_var, len) == 0 && (*env)[len] == '=')
-			return (*env + len + 1);
-		env++;
+		if (strncmp(environ[i], env_var, len) == 0 && environ[i][len] == '=')
+			return (environ[i] + len + 1);
+		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 /**
