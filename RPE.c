@@ -8,14 +8,33 @@
 
 char *read_line(void)
 {
+	int i;
 	char *line = NULL;
 	size_t buffsize = 0;
 	ssize_t bread = getline(&line, &buffsize, stdin);
+
+	if (bread == EOF)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
+	}
 
 	if (bread == -1)
 	{
 		free(line);
 		exit(EXIT_SUCCESS);
+	}
+
+	i = 0;
+
+	while (line[i] != '\0')
+	{
+		if (line[i] == '\n')
+		{
+			line[i] = '\0';
+			break;
+		}
+		i++;
 	}
 
 	return (line);
