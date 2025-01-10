@@ -17,7 +17,7 @@ int main(void)
 			printf("simple_shell $ ");
 		line = read_line();
 		args = parse_line(line);
-		status = exe_args(args, line);
+		status = exe_args(args);
 
 		free(args);
 		free(line);

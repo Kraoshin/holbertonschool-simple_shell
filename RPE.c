@@ -87,23 +87,17 @@ char **parse_line(char *line)
  * Return: 1 if there is any failure
  */
 
-int exe_args(char **args, char *line)
+int exe_args(char **args)
 {
 	pid_t pid;
 	int status;
 	char *path;
 
 	if (!args[0])
-		return (0);
-	if (strncmp(args[0], "exit", 4) == 0)
-	{
-		status = 0;
-		if (args[1])
-			status = atoi(args[1]);
-		free(args);
-		free(line);
-		exit(status);
-	}
+		return (1);
+	if (strcmp(args[0], "exit") == 0)
+		return (0);	
+
 	path = is_a_command(args[0]);
 
 	if (!path)
