@@ -13,7 +13,7 @@ extern char **environ;
 char *read_line(void);
 char *read_stream(void);
 char **parse_line(char *line);
-int exe_args(char **args);
+int exe_args(char **args, char *line);
 void print_env(void);
 char *_getenv(const char *env_var);
 char *is_a_command(char *args);
