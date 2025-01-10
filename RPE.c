@@ -8,14 +8,33 @@
 
 char *read_line(void)
 {
+	int i;
 	char *line = NULL;
 	size_t buffsize = 0;
 	ssize_t bread = getline(&line, &buffsize, stdin);
+
+	if (bread == EOF)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
+	}
 
 	if (bread == -1)
 	{
 		free(line);
 		exit(EXIT_SUCCESS);
+	}
+
+	i = 0;
+
+	while (line[i] != '\0')
+	{
+		if (line[i] == '\n')
+		{
+			line[i] = '\0';
+			break;
+		}
+		i++;
 	}
 
 	return (line);
@@ -77,7 +96,7 @@ int exe_args(char **args)
 	if (!args[0])
 		return (1);
 	if (strcmp(args[0], "exit") == 0)
-		return (0);
+		return (0);	
 
 	path = is_a_command(args[0]);
 
@@ -102,8 +121,6 @@ int exe_args(char **args)
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-
-
 	free(path);
 
 	return (1);
