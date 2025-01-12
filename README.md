@@ -1,9 +1,9 @@
 # Simple Shell Project
 
-## Description
+## Description 🕵️‍♀️
 This is a basic implementation of a Unix shell in C, designed to meet specific project requirements. The shell provides a command-line interface that can execute system commands, handle environment variables, and support both interactive and non-interactive modes.
 
-## Project Requirements
+## Project Requirements ✅
 The shell is implemented according to the specifications in `shell.h`, with the following key functions:
 - `shell_interactive()`: Manage interactive shell mode
 - `shell_no_interactive()`: Handle non-interactive command execution
@@ -14,7 +14,7 @@ The shell is implemented according to the specifications in `shell.h`, with the 
 - Custom `getenv()` implementation
 - Command path resolution with `is_a_command()`
 
-## Supported Delimiters
+## Supported Delimiters ⌨️
 The shell uses the following token delimiters:
 - Space ` `
 - Tab `\t`
@@ -22,12 +22,12 @@ The shell uses the following token delimiters:
 - Newline `\n`
 - Bell `\a`
 
-## Prerequisites
+## Prerequisites 🖥️💻💾
 - GNU Compiler Collection (GCC)
 - UNIX-like operating system (Linux, macOS)
 - Standard C libraries
 
-## Compilation
+## Compilation 📶
 To compile the shell, use the following command:
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell
@@ -35,7 +35,7 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell
 
 ## Usage
 
-### Interactive Mode
+### Interactive Mode ▶️
 Run the shell and interact directly:
 ```bash
 ./simple_shell
@@ -44,35 +44,35 @@ simple_shell$ pwd
 simple_shell$ exit
 ```
 
-### Non-Interactive Mode
+### Non-Interactive Mode ⏹️
 Pipe commands or use input redirection:
 ```bash
 echo "ls" | ./simple_shell
 cat commands.txt | ./simple_shell
 ```
 
-## Built-in Commands
+## Built-in Commands 🦺🥽
 - `exit`: Terminate the shell
 - `env`: Print environment variables
 
-## Key Functionality
+## Key Functionality 🔑🗝️
 - Dynamic command line reading
 - Tokenization of input
 - Path resolution for executable commands
 - Process creation and execution
 - Environment variable handling
 
-## Limitations
+## Limitations 🛂🛃 
 - Limited built-in command support
 - Basic path resolution
 - No advanced shell features like pipes or redirections
 
-## File Structure
+## File Structure 🗂️🗃️
 - `shell.h`: Header file with function declarations
 - `main.c`: Entry point and mode selection
 - Implementation files for each core function
 
-## Error Handling
+## Error Handling 🆘
 Handles various error scenarios:
 - Unknown commands
 - Memory allocation failures
@@ -80,9 +80,9 @@ Handles various error scenarios:
 - Command execution errors
 
 ## Authors
-- Giovanni Farias
+- Giovanni Farias 🥷
   - GitHub: [ginftls](https://github.com/ginftls)
-- Killian Kerleau
+- Killian Kerleau 🧙‍♂️ 
   - GitHub: [Kraoshin](https://github.com/Kraoshin)
 
 ## License
