@@ -79,6 +79,9 @@ Handles various error scenarios:
 - Process creation errors
 - Command execution errors
 
+## Flowchart
+https://github.com/Kraoshin/holbertonschool-simple_shell/blob/main/Flowchart.%20Simple_Shell.drawio.png
+
 ## Authors
 - Giovanni Farias 🥷
   - GitHub: [ginftls](https://github.com/ginftls)
