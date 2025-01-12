@@ -80,7 +80,7 @@ Handles various error scenarios:
 - Command execution errors
 
 ## Flowchart
-![Flowchart](https://gist.github.com/ginftls/2fc48445cbbf5103ed18ee5a67b2451c)
+![Flowchart](https://gist.githubusercontent.com/ginftls/2fc48445cbbf5103ed18ee5a67b2451c/raw/82db0fb755243b2915c754cd013ba3c7931d4738/Simple_Shell.drawio.svg)
 
 ## Authors
 - Giovanni Farias 🥷
