@@ -80,7 +80,7 @@ Handles various error scenarios:
 - Command execution errors
 
 ## Flowchart
-![Flowchart](https://github.com/Kraoshin/holbertonschool-simple_shell/blob/main/Flowchart.%20Simple_Shell.drawio.png)
+![Flowchart](https://gist.github.com/ginftls/2fc48445cbbf5103ed18ee5a67b2451c)
 
 ## Authors
 - Giovanni Farias 🥷
